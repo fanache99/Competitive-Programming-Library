@@ -1,0 +1,4 @@
+add_subdirectory(Kattis)
+add_subdirectory(Codeforces)
+add_subdirectory(Hackerrank)
+add_subdirectory(Lightoj)

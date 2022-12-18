@@ -1,0 +1,1 @@
+add_executable(Codeforces_687B 687B.cpp)

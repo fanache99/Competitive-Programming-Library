@@ -1,0 +1,1 @@
+add_executable(Kattis_generalchineseremainder generalchineseremainder.cpp)

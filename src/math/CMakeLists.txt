@@ -1,1 +1,4 @@
-add_subdirectory(binarySearch)
+add_executable(test_modular tests/test_modular.cpp)
+add_executable(test_combinatorial tests/test_combinatorial.cpp)
+target_link_libraries(test_modular PRIVATE Catch2::Catch2WithMain)
+target_link_libraries(test_combinatorial PRIVATE Catch2::Catch2WithMain)
