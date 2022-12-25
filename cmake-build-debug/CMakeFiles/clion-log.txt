@@ -1,4 +1,4 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/usr/local/Cellar/gcc/12.2.0/bin/gcc-12 -DCMAKE_CXX_COMPILER=/usr/local/Cellar/gcc/12.2.0/bin/g++-12 -D CMAKE_CXX_COMPILER=/usr/local/Cellar/gcc/12.2.0/bin/g++-12 -G "CodeBlocks - Unix Makefiles" /Users/stefan/Desktop/CP/library
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/usr/local/Cellar/gcc/12.2.0/bin/gcc-12 -DCMAKE_CXX_COMPILER=/usr/local/Cellar/gcc/12.2.0/bin/g++-12 -D CMAKE_CXX_COMPILER=/usr/local/Cellar/gcc/12.2.0/bin/g++-12 "-DCMAKE_CXX_FLAGS=-Wall -Wconversion -Wfatal-errors -g -fsanitize=undefined,address" -G "CodeBlocks - Unix Makefiles" /Users/stefan/Desktop/CP/library
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /Users/stefan/Desktop/CP/library/cmake-build-debug

@@ -3,7 +3,7 @@
 #include "bits/stdc++.h"
 #include "math/modular.h"
 
-using Mod = Modular<MemberModulo<long long>>;
+using Mod = VarModular<DynamicModuloPolicy<uint64_t>>;
 
 int main() {
     int tests;

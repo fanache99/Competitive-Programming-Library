@@ -131,6 +131,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+problems/Codeforces/CMakeFiles/Codeforces_300C.dir/rule:
+	cd /Users/stefan/Desktop/CP/library/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 problems/Codeforces/CMakeFiles/Codeforces_300C.dir/rule
+.PHONY : problems/Codeforces/CMakeFiles/Codeforces_300C.dir/rule
+
+# Convenience name for target.
+Codeforces_300C: problems/Codeforces/CMakeFiles/Codeforces_300C.dir/rule
+
+.PHONY : Codeforces_300C
+
+# fast build rule for target.
+Codeforces_300C/fast:
+	cd /Users/stefan/Desktop/CP/library/cmake-build-debug && $(MAKE) $(MAKESILENT) -f problems/Codeforces/CMakeFiles/Codeforces_300C.dir/build.make problems/Codeforces/CMakeFiles/Codeforces_300C.dir/build
+.PHONY : Codeforces_300C/fast
+
+# Convenience name for target.
 problems/Codeforces/CMakeFiles/Codeforces_687B.dir/rule:
 	cd /Users/stefan/Desktop/CP/library/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 problems/Codeforces/CMakeFiles/Codeforces_687B.dir/rule
 .PHONY : problems/Codeforces/CMakeFiles/Codeforces_687B.dir/rule
@@ -144,6 +159,33 @@ Codeforces_687B: problems/Codeforces/CMakeFiles/Codeforces_687B.dir/rule
 Codeforces_687B/fast:
 	cd /Users/stefan/Desktop/CP/library/cmake-build-debug && $(MAKE) $(MAKESILENT) -f problems/Codeforces/CMakeFiles/Codeforces_687B.dir/build.make problems/Codeforces/CMakeFiles/Codeforces_687B.dir/build
 .PHONY : Codeforces_687B/fast
+
+300C.o: 300C.cpp.o
+
+.PHONY : 300C.o
+
+# target to build an object file
+300C.cpp.o:
+	cd /Users/stefan/Desktop/CP/library/cmake-build-debug && $(MAKE) $(MAKESILENT) -f problems/Codeforces/CMakeFiles/Codeforces_300C.dir/build.make problems/Codeforces/CMakeFiles/Codeforces_300C.dir/300C.cpp.o
+.PHONY : 300C.cpp.o
+
+300C.i: 300C.cpp.i
+
+.PHONY : 300C.i
+
+# target to preprocess a source file
+300C.cpp.i:
+	cd /Users/stefan/Desktop/CP/library/cmake-build-debug && $(MAKE) $(MAKESILENT) -f problems/Codeforces/CMakeFiles/Codeforces_300C.dir/build.make problems/Codeforces/CMakeFiles/Codeforces_300C.dir/300C.cpp.i
+.PHONY : 300C.cpp.i
+
+300C.s: 300C.cpp.s
+
+.PHONY : 300C.s
+
+# target to generate assembly for a file
+300C.cpp.s:
+	cd /Users/stefan/Desktop/CP/library/cmake-build-debug && $(MAKE) $(MAKESILENT) -f problems/Codeforces/CMakeFiles/Codeforces_300C.dir/build.make problems/Codeforces/CMakeFiles/Codeforces_300C.dir/300C.cpp.s
+.PHONY : 300C.cpp.s
 
 687B.o: 687B.cpp.o
 
@@ -180,7 +222,11 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... Codeforces_300C"
 	@echo "... Codeforces_687B"
+	@echo "... 300C.o"
+	@echo "... 300C.i"
+	@echo "... 300C.s"
 	@echo "... 687B.o"
 	@echo "... 687B.i"
 	@echo "... 687B.s"

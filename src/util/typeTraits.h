@@ -1,30 +1,30 @@
 #pragma once
 
 template<typename Type>
-struct nextSizeType {};
+struct doubleWidthType {};
 
 template<>
-struct nextSizeType<int> {
-    using type = long long;
+struct doubleWidthType<unsigned char> {
+    using type = unsigned short int;
 };
 
 template<>
-struct nextSizeType<long long> {
-    using type = __int128;
+struct doubleWidthType<unsigned short int> {
+    using type = unsigned int;
 };
 
 template<>
-struct nextSizeType<unsigned int> {
+struct doubleWidthType<unsigned int> {
     using type = unsigned long long;
 };
 
 template<>
-struct nextSizeType<unsigned long long> {
+struct doubleWidthType<unsigned long long> {
     using type = unsigned __int128;
 };
 
 template<typename T>
-using nextSizeType_t = typename nextSizeType<T>::type;
+using doubleWidthType_T = typename doubleWidthType<T>::type;
 
 
 template<template<typename...> typename T, template<typename...> typename U>

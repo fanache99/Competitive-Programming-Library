@@ -3,7 +3,7 @@
 #include "bits/stdc++.h"
 #include "math/modular.h"
 
-using Mod = Modular<MemberModulo<long long>>;
+using Mod = VarModular<DynamicModuloPolicy<uint64_t>>;
 
 int main() {
     int tests;
@@ -13,7 +13,7 @@ int main() {
         std::cin >> a1 >> n1 >> a2 >> n2;
         try {
             Mod ans({Mod(a1, n1), Mod(a2, n2)});
-            std::cout << ans << " " << ans.mod() << "\n";
+            std::cout << ans << " " << ans.modulo() << "\n";
         } catch (Mod::NoSolution&) {
             std::cout << "no solution\n";
         }

@@ -131,6 +131,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+problems/Hackerrank/CMakeFiles/Hackerrank_longest-increasing-subsequence-arrays.dir/rule:
+	cd /Users/stefan/Desktop/CP/library/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 problems/Hackerrank/CMakeFiles/Hackerrank_longest-increasing-subsequence-arrays.dir/rule
+.PHONY : problems/Hackerrank/CMakeFiles/Hackerrank_longest-increasing-subsequence-arrays.dir/rule
+
+# Convenience name for target.
+Hackerrank_longest-increasing-subsequence-arrays: problems/Hackerrank/CMakeFiles/Hackerrank_longest-increasing-subsequence-arrays.dir/rule
+
+.PHONY : Hackerrank_longest-increasing-subsequence-arrays
+
+# fast build rule for target.
+Hackerrank_longest-increasing-subsequence-arrays/fast:
+	cd /Users/stefan/Desktop/CP/library/cmake-build-debug && $(MAKE) $(MAKESILENT) -f problems/Hackerrank/CMakeFiles/Hackerrank_longest-increasing-subsequence-arrays.dir/build.make problems/Hackerrank/CMakeFiles/Hackerrank_longest-increasing-subsequence-arrays.dir/build
+.PHONY : Hackerrank_longest-increasing-subsequence-arrays/fast
+
+# Convenience name for target.
 problems/Hackerrank/CMakeFiles/Hackerrank_cheese-and-random-toppings.dir/rule:
 	cd /Users/stefan/Desktop/CP/library/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 problems/Hackerrank/CMakeFiles/Hackerrank_cheese-and-random-toppings.dir/rule
 .PHONY : problems/Hackerrank/CMakeFiles/Hackerrank_cheese-and-random-toppings.dir/rule
@@ -172,6 +187,33 @@ cheese-and-random-toppings.cpp.s:
 	cd /Users/stefan/Desktop/CP/library/cmake-build-debug && $(MAKE) $(MAKESILENT) -f problems/Hackerrank/CMakeFiles/Hackerrank_cheese-and-random-toppings.dir/build.make problems/Hackerrank/CMakeFiles/Hackerrank_cheese-and-random-toppings.dir/cheese-and-random-toppings.cpp.s
 .PHONY : cheese-and-random-toppings.cpp.s
 
+longest-increasing-subsequence-arrays.o: longest-increasing-subsequence-arrays.cpp.o
+
+.PHONY : longest-increasing-subsequence-arrays.o
+
+# target to build an object file
+longest-increasing-subsequence-arrays.cpp.o:
+	cd /Users/stefan/Desktop/CP/library/cmake-build-debug && $(MAKE) $(MAKESILENT) -f problems/Hackerrank/CMakeFiles/Hackerrank_longest-increasing-subsequence-arrays.dir/build.make problems/Hackerrank/CMakeFiles/Hackerrank_longest-increasing-subsequence-arrays.dir/longest-increasing-subsequence-arrays.cpp.o
+.PHONY : longest-increasing-subsequence-arrays.cpp.o
+
+longest-increasing-subsequence-arrays.i: longest-increasing-subsequence-arrays.cpp.i
+
+.PHONY : longest-increasing-subsequence-arrays.i
+
+# target to preprocess a source file
+longest-increasing-subsequence-arrays.cpp.i:
+	cd /Users/stefan/Desktop/CP/library/cmake-build-debug && $(MAKE) $(MAKESILENT) -f problems/Hackerrank/CMakeFiles/Hackerrank_longest-increasing-subsequence-arrays.dir/build.make problems/Hackerrank/CMakeFiles/Hackerrank_longest-increasing-subsequence-arrays.dir/longest-increasing-subsequence-arrays.cpp.i
+.PHONY : longest-increasing-subsequence-arrays.cpp.i
+
+longest-increasing-subsequence-arrays.s: longest-increasing-subsequence-arrays.cpp.s
+
+.PHONY : longest-increasing-subsequence-arrays.s
+
+# target to generate assembly for a file
+longest-increasing-subsequence-arrays.cpp.s:
+	cd /Users/stefan/Desktop/CP/library/cmake-build-debug && $(MAKE) $(MAKESILENT) -f problems/Hackerrank/CMakeFiles/Hackerrank_longest-increasing-subsequence-arrays.dir/build.make problems/Hackerrank/CMakeFiles/Hackerrank_longest-increasing-subsequence-arrays.dir/longest-increasing-subsequence-arrays.cpp.s
+.PHONY : longest-increasing-subsequence-arrays.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -181,9 +223,13 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Hackerrank_cheese-and-random-toppings"
+	@echo "... Hackerrank_longest-increasing-subsequence-arrays"
 	@echo "... cheese-and-random-toppings.o"
 	@echo "... cheese-and-random-toppings.i"
 	@echo "... cheese-and-random-toppings.s"
+	@echo "... longest-increasing-subsequence-arrays.o"
+	@echo "... longest-increasing-subsequence-arrays.i"
+	@echo "... longest-increasing-subsequence-arrays.s"
 .PHONY : help
 
 

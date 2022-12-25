@@ -5,18 +5,18 @@
 #include "math/combinatorial.h"
 #include "math/primality.h"
 
-using Mod = Modular<DynamicModulo<>>;
-using VarMod = Modular<>;
+using Mod = Modular<DynamicModuloPolicy<>>;
+using VarMod = VarModular<DynamicModuloPolicy<>>;
 
 VarMod lukas(int n, int k, int mod) {
-    Mod::changeMod(mod);
+    auto _ = Mod::changeMod(mod);
     Combinatorial<Mod, Factorials> c(mod - 1);
     Mod ans = 1;
     while (n != 0 || k != 0) {
         ans *= c.binomial(n % mod, k % mod);
         n /= mod, k /= mod;
     }
-    return ans;
+    return VarMod(ans);
 }
 
 int main() {

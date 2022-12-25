@@ -52,3 +52,8 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/Users/stefan/Desktop/CP/library/cmake-build-debug/problems/Lightoj/cmake_install.cmake")
 endif()
 
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/Users/stefan/Desktop/CP/library/cmake-build-debug/problems/Yosupo/cmake_install.cmake")
+endif()
+

@@ -235,6 +235,19 @@ Kattis_generalchineseremainder/fast:
 .PHONY : Kattis_generalchineseremainder/fast
 
 #=============================================================================
+# Target rules for targets named Codeforces_300C
+
+# Build rule for target.
+Codeforces_300C: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Codeforces_300C
+.PHONY : Codeforces_300C
+
+# fast build rule for target.
+Codeforces_300C/fast:
+	$(MAKE) $(MAKESILENT) -f problems/Codeforces/CMakeFiles/Codeforces_300C.dir/build.make problems/Codeforces/CMakeFiles/Codeforces_300C.dir/build
+.PHONY : Codeforces_300C/fast
+
+#=============================================================================
 # Target rules for targets named Codeforces_687B
 
 # Build rule for target.
@@ -246,6 +259,19 @@ Codeforces_687B: cmake_check_build_system
 Codeforces_687B/fast:
 	$(MAKE) $(MAKESILENT) -f problems/Codeforces/CMakeFiles/Codeforces_687B.dir/build.make problems/Codeforces/CMakeFiles/Codeforces_687B.dir/build
 .PHONY : Codeforces_687B/fast
+
+#=============================================================================
+# Target rules for targets named Hackerrank_longest-increasing-subsequence-arrays
+
+# Build rule for target.
+Hackerrank_longest-increasing-subsequence-arrays: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Hackerrank_longest-increasing-subsequence-arrays
+.PHONY : Hackerrank_longest-increasing-subsequence-arrays
+
+# fast build rule for target.
+Hackerrank_longest-increasing-subsequence-arrays/fast:
+	$(MAKE) $(MAKESILENT) -f problems/Hackerrank/CMakeFiles/Hackerrank_longest-increasing-subsequence-arrays.dir/build.make problems/Hackerrank/CMakeFiles/Hackerrank_longest-increasing-subsequence-arrays.dir/build
+.PHONY : Hackerrank_longest-increasing-subsequence-arrays/fast
 
 #=============================================================================
 # Target rules for targets named Hackerrank_cheese-and-random-toppings
@@ -272,6 +298,19 @@ Lightok_monkey-tradition: cmake_check_build_system
 Lightok_monkey-tradition/fast:
 	$(MAKE) $(MAKESILENT) -f problems/Lightoj/CMakeFiles/Lightok_monkey-tradition.dir/build.make problems/Lightoj/CMakeFiles/Lightok_monkey-tradition.dir/build
 .PHONY : Lightok_monkey-tradition/fast
+
+#=============================================================================
+# Target rules for targets named Yosupo_factorize
+
+# Build rule for target.
+Yosupo_factorize: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Yosupo_factorize
+.PHONY : Yosupo_factorize
+
+# fast build rule for target.
+Yosupo_factorize/fast:
+	$(MAKE) $(MAKESILENT) -f problems/Yosupo/CMakeFiles/Yosupo_factorize.dir/build.make problems/Yosupo/CMakeFiles/Yosupo_factorize.dir/build
+.PHONY : Yosupo_factorize/fast
 
 main.o: main.cpp.o
 
@@ -364,10 +403,13 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Catch2"
 	@echo "... Catch2WithMain"
+	@echo "... Codeforces_300C"
 	@echo "... Codeforces_687B"
 	@echo "... Hackerrank_cheese-and-random-toppings"
+	@echo "... Hackerrank_longest-increasing-subsequence-arrays"
 	@echo "... Kattis_generalchineseremainder"
 	@echo "... Lightok_monkey-tradition"
+	@echo "... Yosupo_factorize"
 	@echo "... main"
 	@echo "... test_binary_search"
 	@echo "... test_combinatorial"
