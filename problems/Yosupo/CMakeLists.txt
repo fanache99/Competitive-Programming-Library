@@ -1,1 +1,2 @@
 add_executable(Yosupo_factorize factorize.cpp)
+add_executable(Yosupo_convolution_mod convolution_mod.cpp)

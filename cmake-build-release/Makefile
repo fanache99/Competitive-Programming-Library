@@ -300,6 +300,19 @@ Lightok_monkey-tradition/fast:
 .PHONY : Lightok_monkey-tradition/fast
 
 #=============================================================================
+# Target rules for targets named Yosupo_convolution_mod
+
+# Build rule for target.
+Yosupo_convolution_mod: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Yosupo_convolution_mod
+.PHONY : Yosupo_convolution_mod
+
+# fast build rule for target.
+Yosupo_convolution_mod/fast:
+	$(MAKE) $(MAKESILENT) -f problems/Yosupo/CMakeFiles/Yosupo_convolution_mod.dir/build.make problems/Yosupo/CMakeFiles/Yosupo_convolution_mod.dir/build
+.PHONY : Yosupo_convolution_mod/fast
+
+#=============================================================================
 # Target rules for targets named Yosupo_factorize
 
 # Build rule for target.
@@ -409,6 +422,7 @@ help:
 	@echo "... Hackerrank_longest-increasing-subsequence-arrays"
 	@echo "... Kattis_generalchineseremainder"
 	@echo "... Lightok_monkey-tradition"
+	@echo "... Yosupo_convolution_mod"
 	@echo "... Yosupo_factorize"
 	@echo "... main"
 	@echo "... test_binary_search"

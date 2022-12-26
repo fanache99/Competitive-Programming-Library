@@ -4,6 +4,7 @@
 
 #include "math/basic.h"
 #include "util/typeTraits.h"
+#include "util/bits.h"
 
 template<typename T>
 T modularInverse(T x, T mod) {
@@ -179,17 +180,6 @@ private:
     T R3;           // R^3 % mod
 };
 
-template<typename T = uint32_t>
-class ExtendedMontgomeryModulo {
-    static_assert(std::is_unsigned_v<T>, "T should be unsigned for modulo classes.");
-    using signedT = std::make_signed_t<T>;
-    using doubleWidthT = doubleWidthType_T<T>;
-
-public:
-    MontgomeryModulo<T> odd;
-    T even;
-};
-
 template<typename ModuloPolicy>
 class Modular : public ModuloPolicy {
 public:
@@ -202,7 +192,7 @@ public:
     template<typename U, std::enable_if_t<std::is_integral_v<U>>* = nullptr>
     constexpr Modular(U value) : value(mod().wrap(value)) {}
 
-    constexpr T modulo() {
+    static constexpr T modulo() {
         return mod().modulo();
     }
 
@@ -291,12 +281,19 @@ public:
         return mod().unwrap(value);
     }
 
-    friend std::ostream& operator<<(std::ostream& out, const Self& x) {
+    friend std::ostream& operator << (std::ostream& out, const Self& x) {
         out << T(x);
         return out;
     }
 
-    constexpr const ModT& mod() const {
+    friend std::istream& operator >> (std::istream& in, Self &x) {
+        T val;
+        in >> val;
+        x = Self(val);
+        return in;
+    }
+
+    static constexpr const ModT& mod() {
         return ModuloPolicy::mod();
     }
 
@@ -312,6 +309,21 @@ protected:
     // Used for lazy initialization of [value] by derived classes (due to order of base and member construction).
     constexpr Modular(std::nullptr_t) : value(0) {}
 };
+
+namespace detail {
+    template<typename ModuloPolicy>
+    struct UnityRoot<Modular<ModuloPolicy>> {
+        static constexpr Modular<ModuloPolicy> impl(int n) {
+            auto mod = Modular<ModuloPolicy>::modulo();
+            assert(isPower2(n) && (mod - 1) % n == 0);
+            Modular<ModuloPolicy> root = 1;
+            while (pow(root, (mod - 1) / 2) == 1) {
+                root++;
+            }
+            return pow(root, (mod - 1) / n);
+        }
+    };
+}
 
 template<auto MOD, typename T = std::make_unsigned_t<decltype(MOD)>, template<typename> typename ModT = StandardModulo>
 struct StaticModuloPolicy {

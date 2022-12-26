@@ -1,5 +1,6 @@
 #pragma once
-#include <iostream>
+
+#include <complex>
 
 template<typename T, typename P, typename Op>
 constexpr T fastOp(T base, P power, T e, Op op) {
@@ -25,4 +26,22 @@ constexpr std::tuple<T, T, T> euclid(T a, T b) {
     } else {
         return {1, 0, a};
     }
+}
+
+// Simulate partial template specialization for functions.
+namespace detail {
+    template<typename T>
+    struct UnityRoot {};
+
+    template<typename T>
+    struct UnityRoot<std::complex<T>> {
+        static constexpr std::complex<T> impl(int n) {
+            return std::polar(T(1), T(2 * M_PI / n));
+        }
+    };
+}
+
+template<typename T>
+constexpr T unityRoot(int n) {
+    return detail::UnityRoot<T>::impl(n);
 }

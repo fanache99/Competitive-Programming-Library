@@ -37,4 +37,5 @@
 /Users/stefan/Desktop/CP/library/cmake-build-release/problems/Lightoj/CMakeFiles/Lightok_monkey-tradition.dir
 /Users/stefan/Desktop/CP/library/cmake-build-release/problems/Yosupo/CMakeFiles/rebuild_cache.dir
 /Users/stefan/Desktop/CP/library/cmake-build-release/problems/Yosupo/CMakeFiles/edit_cache.dir
+/Users/stefan/Desktop/CP/library/cmake-build-release/problems/Yosupo/CMakeFiles/Yosupo_convolution_mod.dir
 /Users/stefan/Desktop/CP/library/cmake-build-release/problems/Yosupo/CMakeFiles/Yosupo_factorize.dir

@@ -131,6 +131,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+problems/Yosupo/CMakeFiles/Yosupo_convolution_mod.dir/rule:
+	cd /Users/stefan/Desktop/CP/library/cmake-build-release && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 problems/Yosupo/CMakeFiles/Yosupo_convolution_mod.dir/rule
+.PHONY : problems/Yosupo/CMakeFiles/Yosupo_convolution_mod.dir/rule
+
+# Convenience name for target.
+Yosupo_convolution_mod: problems/Yosupo/CMakeFiles/Yosupo_convolution_mod.dir/rule
+
+.PHONY : Yosupo_convolution_mod
+
+# fast build rule for target.
+Yosupo_convolution_mod/fast:
+	cd /Users/stefan/Desktop/CP/library/cmake-build-release && $(MAKE) $(MAKESILENT) -f problems/Yosupo/CMakeFiles/Yosupo_convolution_mod.dir/build.make problems/Yosupo/CMakeFiles/Yosupo_convolution_mod.dir/build
+.PHONY : Yosupo_convolution_mod/fast
+
+# Convenience name for target.
 problems/Yosupo/CMakeFiles/Yosupo_factorize.dir/rule:
 	cd /Users/stefan/Desktop/CP/library/cmake-build-release && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 problems/Yosupo/CMakeFiles/Yosupo_factorize.dir/rule
 .PHONY : problems/Yosupo/CMakeFiles/Yosupo_factorize.dir/rule
@@ -144,6 +159,33 @@ Yosupo_factorize: problems/Yosupo/CMakeFiles/Yosupo_factorize.dir/rule
 Yosupo_factorize/fast:
 	cd /Users/stefan/Desktop/CP/library/cmake-build-release && $(MAKE) $(MAKESILENT) -f problems/Yosupo/CMakeFiles/Yosupo_factorize.dir/build.make problems/Yosupo/CMakeFiles/Yosupo_factorize.dir/build
 .PHONY : Yosupo_factorize/fast
+
+convolution_mod.o: convolution_mod.cpp.o
+
+.PHONY : convolution_mod.o
+
+# target to build an object file
+convolution_mod.cpp.o:
+	cd /Users/stefan/Desktop/CP/library/cmake-build-release && $(MAKE) $(MAKESILENT) -f problems/Yosupo/CMakeFiles/Yosupo_convolution_mod.dir/build.make problems/Yosupo/CMakeFiles/Yosupo_convolution_mod.dir/convolution_mod.cpp.o
+.PHONY : convolution_mod.cpp.o
+
+convolution_mod.i: convolution_mod.cpp.i
+
+.PHONY : convolution_mod.i
+
+# target to preprocess a source file
+convolution_mod.cpp.i:
+	cd /Users/stefan/Desktop/CP/library/cmake-build-release && $(MAKE) $(MAKESILENT) -f problems/Yosupo/CMakeFiles/Yosupo_convolution_mod.dir/build.make problems/Yosupo/CMakeFiles/Yosupo_convolution_mod.dir/convolution_mod.cpp.i
+.PHONY : convolution_mod.cpp.i
+
+convolution_mod.s: convolution_mod.cpp.s
+
+.PHONY : convolution_mod.s
+
+# target to generate assembly for a file
+convolution_mod.cpp.s:
+	cd /Users/stefan/Desktop/CP/library/cmake-build-release && $(MAKE) $(MAKESILENT) -f problems/Yosupo/CMakeFiles/Yosupo_convolution_mod.dir/build.make problems/Yosupo/CMakeFiles/Yosupo_convolution_mod.dir/convolution_mod.cpp.s
+.PHONY : convolution_mod.cpp.s
 
 factorize.o: factorize.cpp.o
 
@@ -180,7 +222,11 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... Yosupo_convolution_mod"
 	@echo "... Yosupo_factorize"
+	@echo "... convolution_mod.o"
+	@echo "... convolution_mod.i"
+	@echo "... convolution_mod.s"
 	@echo "... factorize.o"
 	@echo "... factorize.i"
 	@echo "... factorize.s"
