@@ -1,1 +1,0 @@
-/usr/local/Cellar/gcc/12.2.0/bin/g++-12  -Wall -Wconversion -Wfatal-errors -g -fsanitize=undefined,address -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -mmacosx-version-min=12.5 -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/Codeforces_300C.dir/300C.cpp.o  -o Codeforces_300C 

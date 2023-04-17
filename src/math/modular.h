@@ -224,7 +224,7 @@ public:
 
     constexpr Self operator-() {
         Self ans = *this;
-        ans.value = mod().negate(ans.value);
+        ans.value = mod().negative(ans.value);
         return ans;
     }
 

@@ -56,7 +56,7 @@ private:
         for (size_t step = n / 2; step > 0; step /= 2) {
             T w = unityRoot<T>(n / step), wn = 1;
             if (inv) {
-                w = 1 / w;
+                w = T(1) / w;
             }
             for (size_t i = 0; i < n / 2; i += step, wn *= w) {
                 for (size_t j = 0; j < step; j++) {
@@ -68,7 +68,7 @@ private:
             swap(a, temp);
         }
         if (inv) {
-            T divide = T(1) / n;
+            T divide = T(1) / T(n);
             for (auto &x : a) {
                 x *= divide;
             }

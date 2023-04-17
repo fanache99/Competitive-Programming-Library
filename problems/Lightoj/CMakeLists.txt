@@ -1,1 +1,1 @@
-add_executable(Lightok_monkey-tradition monkey-tradition.cpp)
+add_subdirectory(monkey-tradition)

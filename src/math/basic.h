@@ -1,6 +1,7 @@
 #pragma once
 
 #include <complex>
+#include <numeric>
 
 template<typename T, typename P, typename Op>
 constexpr T fastOp(T base, P power, T e, Op op) {
@@ -15,7 +16,7 @@ constexpr T fastOp(T base, P power, T e, Op op) {
 
 template<typename T, typename P>
 constexpr T pow(T base, P power) {
-    return fastOp<T, P>(base, power, 1, [](T a, T b) { return a * b; });
+    return fastOp<T, P>(base, power, 1, std::multiplies<>());
 }
 
 template<typename T>
@@ -36,7 +37,7 @@ namespace detail {
     template<typename T>
     struct UnityRoot<std::complex<T>> {
         static constexpr std::complex<T> impl(int n) {
-            return std::polar(T(1), T(2 * M_PI / n));
+            return std::polar(T(1), T(2 * std::numbers::pi / n));
         }
     };
 }

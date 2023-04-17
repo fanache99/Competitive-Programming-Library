@@ -50,7 +50,7 @@ std::vector<T> factor(T n) {
         auto _ = Mod::changeMod(n);
         constexpr T m = std::numeric_limits<T>::digits;
         T r = 1, g;
-        Mod c(0), y, q, x, ys;
+        Mod c = 0, y, q, x, ys;
         do {
             ++c;
             y = 2;

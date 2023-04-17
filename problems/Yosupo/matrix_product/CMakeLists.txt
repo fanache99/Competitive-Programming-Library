@@ -1,0 +1,1 @@
+add_executable(Yosupo_matrix_product main.cpp)

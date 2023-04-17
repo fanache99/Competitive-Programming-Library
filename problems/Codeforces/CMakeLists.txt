@@ -1,2 +1,4 @@
-add_executable(Codeforces_687B 687B.cpp)
-add_executable(Codeforces_300C 300C.cpp)
+add_subdirectory(300)
+add_subdirectory(687)
+add_subdirectory(1117)
+add_subdirectory(1785)

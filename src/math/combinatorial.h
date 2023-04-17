@@ -50,6 +50,15 @@ public:
         }
     }
 
+    T inverseFactorial(int n) {
+        assert(n <= limit);
+        if constexpr (typeInList<Factorials, Memoizations...>()) {
+            return this->inverseFactorials[n];
+        } else {
+            return 1 / factorial(n);
+        }
+    }
+
     T binomial(int n, int k) {
         if (n < 0 || k < 0 || n < k) {
             return 0;

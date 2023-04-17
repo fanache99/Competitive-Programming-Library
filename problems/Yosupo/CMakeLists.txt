@@ -1,2 +1,3 @@
-add_executable(Yosupo_factorize factorize.cpp)
-add_executable(Yosupo_convolution_mod convolution_mod.cpp)
+add_subdirectory(convolution_mod)
+add_subdirectory(factorize)
+add_subdirectory(matrix_product)

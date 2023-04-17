@@ -1,1 +1,2 @@
-add_executable(Kattis_generalchineseremainder generalchineseremainder.cpp)
+add_subdirectory(generalchineseremainder)
+add_subdirectory(kinversions)
