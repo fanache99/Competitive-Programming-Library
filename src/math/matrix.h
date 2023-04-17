@@ -162,10 +162,10 @@ public:
     size_t size() const;
 
     template<typename ...Dims>
-    size_t operator()(Dims ...dims) const;
+    size_t operator()(Dims ...dims) const requires (N > 2);
     size_t operator()(const std::array<size_t, N> &point) const;
-    size_t operator()(size_t i, size_t j) const;
-    size_t operator()(size_t i) const;
+    size_t operator()(size_t i, size_t j) const requires (N == 2);
+    size_t operator()(size_t i) const requires (N == 1);
 
     template<size_t Dim>
     MatrixShape<N - 1> dimension(size_t n) const;
@@ -186,6 +186,13 @@ private:
 template<typename T, size_t N, bool IsRef>
 class MatrixBase {
 public:
+    struct RREFResult {
+        explicit RREFResult() : sign(1) {}
+
+        std::vector<size_t> pivots;
+        int sign;
+    };
+
     static_assert(!std::is_reference_v<T>, "Matrices cannot hold reference types.");
     static_assert(IsRef || std::is_same_v<T, std::remove_cvref_t<T>>, "Matrix types should not be cv-qualified.");
     using valueType = std::remove_cv_t<T>;
@@ -204,20 +211,23 @@ public:
     MatrixBase(const MatrixBase<U, N, IsRefOther> &m);
     template<typename U, bool IsRefOther>
     MatrixBase(MatrixBase<U, N, IsRefOther> &m);
+    template<typename U>
+    MatrixBase(const MatrixRef<U, N> &m) requires (!IsRef);
     MatrixBase(MatrixShape<N> shape, std::vector<valueType> &data);
     MatrixBase(MatrixShape<N> shape, const std::vector<valueType> &data);
     MatrixBase(const MatrixInitializer<T, N> &init);
     MatrixBase(const MatrixShape<N> &shape, const T &val);
 
+    std::array<size_t, N> extents() const;
     size_t size(std::optional<size_t> dim = std::nullopt) const;
-    size_t rows() const;
-    size_t columns() const;
+    size_t rows() const requires (N == 2);
+    size_t columns() const requires (N == 2);
     std::conditional_t<(N > 1), MatrixRef<T, N - 1>, T &> operator[](size_t n);
     std::conditional_t<(N > 1), MatrixRef<const T, N - 1>, const T &> operator[](size_t n) const;
-    MatrixRef<T, N - 1> row(size_t n);
-    MatrixRef<const T, N - 1> row(size_t n) const;
-    MatrixRef<T, N - 1> column(size_t n);
-    MatrixRef<const T, N - 1> column(size_t n) const;
+    MatrixRef<T, N - 1> row(size_t n) requires (N == 2);
+    MatrixRef<const T, N - 1> row(size_t n) const requires (N == 2);
+    MatrixRef<T, N - 1> column(size_t n) requires (N == 2);
+    MatrixRef<const T, N - 1> column(size_t n) const requires (N == 2);
     template<size_t Dim>
     MatrixRef<T, N - 1> dimension(size_t n);
     template<size_t Dim>
@@ -228,7 +238,19 @@ public:
     template<typename ...Dims>
     requires (sizeof...(Dims) == N)
     const T &operator()(Dims ...dims) const;
-    operator T &();
+    template<typename ...Dims>
+    requires (sizeof...(Dims) == N)
+    T &at(Dims ...dims);
+    template<typename ...Dims>
+    requires (sizeof...(Dims) == N)
+    const T &at(Dims ...dims) const;
+    operator T &() requires (N == 0);
+
+    RREFResult makeRREF() requires (N == 2);
+    size_t rank() requires (N == 2);
+    T determinant() requires (N == 2);
+    std::optional<Matrix<T, N>> inverse() requires (N == 2);
+    Matrix<T, 2> transpose() requires (N == 2);
 
     MatrixIterator<T, N> begin();
     MatrixIterator<T, N> end();
@@ -249,6 +271,8 @@ public:
     MatrixBase &operator*=(const T &value);
     MatrixBase &operator%=(const T &value);
     template<bool IsRefOther>
+    bool operator==(const MatrixBase<T, N, IsRefOther> &m);
+    template<bool IsRefOther>
     MatrixBase<T, N, IsRef> &operator+=(const MatrixBase<T, N, IsRefOther> &m);
     template<bool IsRefOther>
     MatrixBase<T, N, IsRef> &operator-=(const MatrixBase<T, N, IsRefOther> &m);
@@ -260,6 +284,9 @@ private:
 
     static void copyFlat(std::vector<valueType> &data, const MatrixInitializer<T, N> &init);
 };
+
+template<typename T, bool IsRef1, bool IsRef2>
+std::optional<Vector<T>> solve(const MatrixBase<T, 2, IsRef1> &a, const MatrixBase<T, 1, IsRef2> &b);
 
 /* ----------------------------------------------IMPLEMENTATION------------------------------------------------------ */
 template<typename T, size_t N>
@@ -380,7 +407,7 @@ size_t MatrixShape<N>::size() const {
 
 template<size_t N>
 template<typename... Dims>
-size_t MatrixShape<N>::operator()(Dims... dims) const {
+size_t MatrixShape<N>::operator()(Dims... dims) const requires (N > 2) {
     static_assert(sizeof...(Dims) == N);
     std::array<size_t, N> point{dims...};
     return (*this)(point);
@@ -392,13 +419,13 @@ size_t MatrixShape<N>::operator()(const std::array<size_t, N> &point) const {
 }
 
 template<size_t N>
-size_t MatrixShape<N>::operator()(size_t i, size_t j) const {
+size_t MatrixShape<N>::operator()(size_t i, size_t j) const requires (N == 2) {
     static_assert(N == 2);
     return start + strides[0] * i + strides[1]  * j;
 }
 
 template<size_t N>
-size_t MatrixShape<N>::operator()(size_t i) const {
+size_t MatrixShape<N>::operator()(size_t i) const requires (N == 1) {
     static_assert(N == 1);
     return start + strides[0] * i;
 }
@@ -440,6 +467,15 @@ template<typename U, bool IsRefOther>
 MatrixBase<T, N, IsRef>::MatrixBase(MatrixBase<U, N, IsRefOther> &m) : shape(m.shape), data(m.data) {}
 
 template<typename T, size_t N, bool IsRef>
+template<typename U>
+MatrixBase<T, N, IsRef>::MatrixBase(const MatrixRef<U, N> &m) requires (!IsRef) : shape(m.extents()) {
+    data.reserve(shape.size());
+    for (auto &entry : m) {
+        data.push_back(entry);
+    }
+}
+
+template<typename T, size_t N, bool IsRef>
 MatrixBase<T, N, IsRef>::MatrixBase(MatrixShape<N> shape, const std::vector<valueType> &data) : shape(shape), data(data) {}
 
 template<typename T, size_t N, bool IsRef>
@@ -466,6 +502,15 @@ void MatrixBase<T, N, IsRef>::copyFlat(std::vector<valueType> &data, const Matri
 }
 
 template<typename T, size_t N, bool IsRef>
+std::array<size_t, N> MatrixBase<T, N, IsRef>::extents() const {
+    std::array<size_t, N> ext;
+    for (size_t i = 0; i < N; i++) {
+        ext[i] = size(i);
+    }
+    return ext;
+}
+
+template<typename T, size_t N, bool IsRef>
 size_t MatrixBase<T, N, IsRef>::size(std::optional<size_t> dim) const {
     if (dim) {
         assert(*dim >= 0 && *dim < N);
@@ -476,14 +521,12 @@ size_t MatrixBase<T, N, IsRef>::size(std::optional<size_t> dim) const {
 }
 
 template<typename T, size_t N, bool IsRef>
-size_t MatrixBase<T, N, IsRef>::rows() const {
-    static_assert(N == 2, "[rows] method is only available for 2-dimensional matrices.");
+size_t MatrixBase<T, N, IsRef>::rows() const requires (N == 2) {
     return size(0);
 }
 
 template<typename T, size_t N, bool IsRef>
-size_t MatrixBase<T, N, IsRef>::columns() const {
-    static_assert(N == 2, "[columns] method is only available for 2-dimensional matrices.");
+size_t MatrixBase<T, N, IsRef>::columns() const requires (N == 2) {
     return size(1);
 }
 
@@ -508,26 +551,22 @@ std::conditional_t<(N > 1), MatrixRef<const T, N - 1>, const T &> MatrixBase<T, 
 }
 
 template<typename T, size_t N, bool IsRef>
-MatrixRef<T, N - 1> MatrixBase<T, N, IsRef>::row(size_t n) {
-    static_assert(N == 2, "[row] method is only available for 2-dimensional matrices.");
+MatrixRef<T, N - 1> MatrixBase<T, N, IsRef>::row(size_t n) requires (N == 2) {
     return dimension<0>(n);
 }
 
 template<typename T, size_t N, bool IsRef>
-MatrixRef<const T, N - 1> MatrixBase<T, N, IsRef>::row(size_t n) const {
-    static_assert(N == 2, "[row] method is only available for 2-dimensional matrices.");
+MatrixRef<const T, N - 1> MatrixBase<T, N, IsRef>::row(size_t n) const requires (N == 2) {
     return dimension<0>(n);
 }
 
 template<typename T, size_t N, bool IsRef>
-MatrixRef<T, N - 1> MatrixBase<T, N, IsRef>::column(size_t n) {
-    static_assert(N == 2, "[column] method is only available for 2-dimensional matrices.");
+MatrixRef<T, N - 1> MatrixBase<T, N, IsRef>::column(size_t n) requires (N == 2) {
     return dimension<1>(n);
 }
 
 template<typename T, size_t N, bool IsRef>
-MatrixRef<const T, N - 1> MatrixBase<T, N, IsRef>::column(size_t n) const {
-    static_assert(N == 2, "[column] method is only available for 2-dimensional matrices.");
+MatrixRef<const T, N - 1> MatrixBase<T, N, IsRef>::column(size_t n) const requires (N == 2) {
     return dimension<1>(n);
 }
 
@@ -558,8 +597,21 @@ const T &MatrixBase<T, N, IsRef>::operator()(Dims... dims) const {
 }
 
 template<typename T, size_t N, bool IsRef>
-MatrixBase<T, N, IsRef>::operator T &() {
-    static_assert(N == 0, "Only 0-dimensional matrices ");
+template<typename... Dims>
+requires (sizeof...(Dims) == N)
+const T &MatrixBase<T, N, IsRef>::at(Dims... dims) const {
+    return (*this)(dims...);
+}
+
+template<typename T, size_t N, bool IsRef>
+template<typename... Dims>
+requires (sizeof...(Dims) == N)
+T &MatrixBase<T, N, IsRef>::at(Dims... dims) {
+    return (*this)(dims...);
+}
+
+template<typename T, size_t N, bool IsRef>
+MatrixBase<T, N, IsRef>::operator T &() requires (N == 0) {
     return data[0];
 }
 
@@ -652,6 +704,12 @@ MatrixBase<T, N, IsRef> &MatrixBase<T, N, IsRef>::operator*=(const T &value) {
 template<typename T, size_t N, bool IsRef>
 MatrixBase<T, N, IsRef> &MatrixBase<T, N, IsRef>::operator%=(const T &value) {
     return apply([&](T &x) { x %= value; });
+}
+
+template<typename T, size_t N, bool IsRef>
+template<bool IsRefOther>
+bool MatrixBase<T, N, IsRef>::operator==(const MatrixBase<T, N, IsRefOther> &m) {
+    return data == m.data;
 }
 
 template<typename T, size_t N, bool IsRef>
@@ -782,4 +840,112 @@ Matrix<T, N> operator%(const T &value, MatrixBase<T, N, IsRef> m1) {
 template<typename T, bool IsRef, typename P>
 Matrix<T, 2> pow(const MatrixBase<T, 2, IsRef> &base, P power) {
     return fastOp(base, power, Matrix<T>::one(base.rows()), std::multiplies<>());
+}
+
+template<typename T, size_t N, bool IsRef>
+MatrixBase<T, N, IsRef>::RREFResult MatrixBase<T, N, IsRef>::makeRREF() requires (N == 2) {
+    RREFResult result;
+    size_t n = rows(), m = columns();
+    for (size_t column = 0, rank = 0; column < m && rank < n; ++column) {
+        for (size_t row = rank; row < n; ++row) {
+            if (at(row, column) != 0) {
+                if (row != rank) {
+                    for (size_t temp = 0; temp < m; temp++) {
+                        std::swap(at(row, temp), at(rank, temp));
+                    }
+                    result.sign = -result.sign;
+                }
+                break;
+            }
+        }
+        if (at(rank, column) == 0) {
+            continue;
+        }
+        for (size_t row = 0; row < n; row++) {
+            T scale = at(row, column) / at(rank, column);
+            if (row == rank || scale == 0) {
+                continue;
+            }
+            for (size_t temp = 0; temp < m; temp++) {
+                at(row, temp) -= at(rank, temp) * scale;
+            }
+        }
+        result.pivots.push_back(column);
+        ++rank;
+    }
+    return result;
+}
+
+template<typename T, size_t N, bool IsRef>
+size_t MatrixBase<T, N, IsRef>::rank() requires (N == 2) {
+    return makeRREF().pivots.size();
+}
+
+template<typename T, size_t N, bool IsRef>
+T MatrixBase<T, N, IsRef>::determinant() requires (N == 2) {
+    assert(rows() == columns());
+    auto [_, sign] = makeRREF();
+    T det = sign;
+    for (size_t i = 0; i < rows(); i++) {
+        det *= at(i, i);
+    }
+    return det;
+}
+
+template<typename T, size_t N, bool IsRef>
+std::optional<Matrix<T, N>> MatrixBase<T, N, IsRef>::inverse() requires (N == 2) {
+    assert(rows() == columns());
+    size_t n = rows();
+    Matrix<T> temp(n, 2 * n);
+    for (size_t i = 0; i < n; i++) {
+        for (size_t j = 0; j < n; j++) {
+            temp(i, j) = at(i, j);
+            temp(i, j + n) = (i == j);
+        }
+    }
+    auto [pivots, _] = temp.makeRREF();
+    if (pivots.size() < n || pivots.back() >= n) {
+        return std::nullopt;
+    }
+    Matrix<T> inv(n, n);
+    for (size_t i = 0; i < n; i++) {
+        for (size_t j = 0; j < n; j++) {
+            inv(i, j) = temp(i, j + n) / temp(i, i);
+        }
+    }
+    return inv;
+}
+
+template<typename T, bool IsRef1, bool IsRef2>
+std::optional<Vector<T>> solve(const MatrixBase<T, 2, IsRef1> &a, const MatrixBase<T, 1, IsRef2> &b) {
+    assert(a.rows() == b.size());
+    size_t n = a.rows(), m = a.columns();
+    Matrix<T> temp(n, m + 1);
+    for (size_t i = 0; i < n; i++) {
+        for (size_t j = 0; j < m; j++) {
+            temp(i, j) = a(i, j);
+        }
+        temp(i, m) = b(i);
+    }
+    auto [pivots, _] = temp.makeRREF();
+    if (!pivots.empty() && pivots.back() == m) {
+        return std::nullopt;
+    }
+    Vector<T> sol(m);
+    for (size_t i = 0; i < pivots.size(); i++) {
+        sol[pivots[i]] = temp(i, m) / temp(i, pivots[i]);
+    }
+    return sol;
+}
+
+template<typename T, size_t N, bool IsRef>
+Matrix<T, 2> MatrixBase<T, N, IsRef>::transpose() requires (N == 2) {
+    size_t n = rows(), m = columns();
+    Matrix<T, 2> t(m, n);
+    for (size_t i = 0; i < n; i++) {
+        for (size_t j = 0; j < m; j++) {
+            t(j, i) = at(i, j);
+        }
+    }
+    return t;
 }

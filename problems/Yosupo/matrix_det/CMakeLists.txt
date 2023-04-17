@@ -1,0 +1,1 @@
+add_executable(Yosupo_matrix_det main.cpp)

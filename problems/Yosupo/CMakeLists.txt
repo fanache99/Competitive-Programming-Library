@@ -1,3 +1,6 @@
 add_subdirectory(convolution_mod)
 add_subdirectory(factorize)
 add_subdirectory(matrix_product)
+add_subdirectory(system_of_linear_equations)
+add_subdirectory(matrix_det)
+add_subdirectory(inverse_matrix)
