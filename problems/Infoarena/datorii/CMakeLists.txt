@@ -1,0 +1,1 @@
+add_executable(Infoarena_datorii main.cpp)

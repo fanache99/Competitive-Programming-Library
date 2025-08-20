@@ -1,0 +1,1 @@
+add_executable(Yosupo_range_chmin_chmax_add_range_sum main.cpp)

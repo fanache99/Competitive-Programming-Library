@@ -1,0 +1,1 @@
+add_executable(Yosupo_point_set_range_composite main.cpp)

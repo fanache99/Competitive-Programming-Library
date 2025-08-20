@@ -1,0 +1,1 @@
+add_executable(SegmentTree_experiment experiments/segmentTree.cpp)

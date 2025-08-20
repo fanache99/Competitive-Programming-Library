@@ -1,0 +1,1 @@
+add_executable(Yosupo_inverse_matrix main.cpp)

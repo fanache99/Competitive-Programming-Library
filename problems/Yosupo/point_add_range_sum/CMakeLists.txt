@@ -1,0 +1,1 @@
+add_executable(Yosupo_point_add_range_sum main.cpp)

@@ -1,0 +1,7 @@
+add_subdirectory(61)
+add_subdirectory(300)
+add_subdirectory(339)
+add_subdirectory(687)
+add_subdirectory(1117)
+add_subdirectory(1785)
+add_subdirectory(1817)

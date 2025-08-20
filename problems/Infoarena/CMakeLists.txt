@@ -1,0 +1,2 @@
+add_subdirectory(arbint)
+add_subdirectory(datorii)

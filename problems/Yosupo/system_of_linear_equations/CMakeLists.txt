@@ -1,0 +1,1 @@
+add_executable(Yosupo_system_of_linear_equations main.cpp)

@@ -1,0 +1,2 @@
+add_subdirectory(generalchineseremainder)
+add_subdirectory(kinversions)

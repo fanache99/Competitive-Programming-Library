@@ -1,0 +1,1 @@
+add_executable(Yosupo_range_affine_point_get main.cpp)

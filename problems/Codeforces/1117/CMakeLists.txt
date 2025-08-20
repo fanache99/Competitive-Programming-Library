@@ -1,0 +1,1 @@
+add_executable(Codeforces_1117D D/main.cpp)
